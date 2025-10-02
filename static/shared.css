@@ -1,0 +1,43 @@
+body {
+  font-family: var(
+    --default-font-family,
+    ui-sans-serif,
+    system-ui,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji"
+  );
+  background-color: rgb(20, 20, 20);
+  color: rgb(235, 235, 235);
+  text-align: center;
+}
+
+a {
+  color: rgb(100, 200, 200);
+}
+
+.noTop {
+  margin-top: 0em;
+}
+.noBottom {
+  margin-bottom: 0em;
+}
+
+.centererBox {
+  display: flex;
+}
+.fillerElement {
+  width: 200px;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.mainElement {
+  border-radius: 20px;
+  border-color: rgb(230, 230, 230);
+  border-width: 5px;
+  background-color: rgb(30, 30, 30);
+  padding: 20px;
+  width: 750px;
+}
