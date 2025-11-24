@@ -1,3 +1,10 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/*
+:root {}
+*/
+
 body {
   font-family: var(
     --default-font-family,
@@ -9,8 +16,8 @@ body {
     "Segoe UI Symbol",
     "Noto Color Emoji"
   );
-  background-color: rgb(20, 20, 20);
-  color: rgb(235, 235, 235);
+  background-color: var(--primary-bg-color);
+  color: var(--outline-white);
   text-align: center;
 }
 
@@ -21,23 +28,7 @@ a {
 .noTop {
   margin-top: 0em;
 }
+
 .noBottom {
   margin-bottom: 0em;
-}
-
-.centererBox {
-  display: flex;
-}
-.fillerElement {
-  width: 200px;
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-.mainElement {
-  border-radius: 20px;
-  border-color: rgb(230, 230, 230);
-  border-width: 5px;
-  background-color: rgb(30, 30, 30);
-  padding: 20px;
-  width: 750px;
 }

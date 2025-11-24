@@ -1,1 +1,3 @@
-// place files you want to import through the `$lib` alias in this folder.
+export function randomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}

@@ -1,0 +1,14 @@
+{
+  "lint": {
+    "rules": {
+      "tags": ["recommended", "jsr"],
+      "include": [
+        "camelCase",
+        "eqeqeq",
+        "explicit-function-return-type",
+        "no-const-reassign",
+        "no-eval"
+      ]
+    }
+  }
+}
