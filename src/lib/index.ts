@@ -1,2 +1,4 @@
+// Utility functions en vars en shit
+
 export const randomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1) + min);
