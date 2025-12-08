@@ -1,23 +1,31 @@
-import { json, type RequestEvent } from "@sveltejs/kit";
+import { json } from "@sveltejs/kit";
 
-export async function GET({ url }: RequestEvent): Promise<Response> {
-  const sessionRequest = await fetch("api.hierkomteen.url/session", {
-    // Body here
-  });
+export type SessionRoutePOSTRequest = {
+  authorizationKey: string;
+};
 
-  const sessionRequestData = await sessionRequest.json();
+export const sessionRoute = {
+  async GET(id: string): Promise<Response> {
+    const sessionResponse = await fetch(
+      `api.hierkomteen.url/session/id?${id}`,
+      {
 
-  const returnData = {};
-  return json(returnData);
-}
+      },
+    );
 
-export async function POST({ url }: RequestEvent): Promise<Response> {
-  const sessionRequest = await fetch("api.hierkomteen.url/session", {
-    // Body here
-  });
+    const sessionResponseData = await sessionResponse.json();
 
-  const sessionRequestData = await sessionRequest.json();
+    const returnData = {};
+    return json(returnData);
+  },
+  async POST(...args: any[]): Promise<Response> {
+    const sessionResponse = await fetch("api.hierkomteen.url/session", {
+      // Body here
+    });
 
-  const returnData = {};
-  return json(returnData);
-}
+    const sessionResponseData = await sessionResponse.json();
+
+    const returnData = {};
+    return json(returnData);
+  },
+};

@@ -9,8 +9,8 @@
 </script>
 
 <h1>Whoops!</h1>
-<h2 class="nob">Something went wrong!</h2>
-<p class="not">
+<h2>Something went wrong!</h2>
+<p>
   Error code: {page.status}, {page.error?.message}
 </p>
 <h1>{emojis[page.status ?? 500]}</h1>
