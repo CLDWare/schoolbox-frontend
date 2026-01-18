@@ -16,7 +16,7 @@ Om frontend te gebruiken moet je de backend ook hebben, maar dat is niet mijn pr
 
 ### Dev
 ```bash
-deno run dev
+deno task dev
 
 caddy start
 ```
@@ -25,8 +25,8 @@ Hierna kan je [localhost:8000](http://localhost:8000) bezoeken
 ### Production
 Uhh ja idk, ik kom hier later wel op terug
 ```bash
-deno run build
-deno run preview
+deno task build
+deno task preview
 
 caddy start
 ```
