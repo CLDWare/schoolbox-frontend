@@ -1,9 +1,9 @@
 import { render } from 'preact';
 import { LocationProvider, Router, Route } from 'preact-iso';
 
-import { Header } from './components/Header.jsx';
-import { Home } from './pages/Home/index.jsx';
-import { NotFound } from './pages/_404.jsx';
+import { Header } from './components/Header.tsx';
+import { Home } from './pages/Home/index.tsx';
+import { NotFound } from './pages/_404.tsx';
 import './style.css';
 
 export function App() {
@@ -20,4 +20,4 @@ export function App() {
 	);
 }
 
-render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app')!);
