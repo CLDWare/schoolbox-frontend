@@ -1,23 +1,35 @@
 import { render } from 'preact';
 import { LocationProvider, Router, Route } from 'preact-iso';
+import { ComponentType } from 'preact';
 
 import { Header } from './components/Header.tsx';
+import { AdminRoute } from './components/AdminRoute.tsx';
 import { Home } from './pages/Home/index.tsx';
+import { Devices } from "./pages/Admin/Devices/index.tsx";
+import { Users } from "./pages/Admin/Users/index.tsx";
 import { NotFound } from './pages/_404.tsx';
 import './style.css';
 
+const withAdmin = (Component: ComponentType) => () => (
+    <AdminRoute>
+        <Component />
+    </AdminRoute>
+);
+
 export function App() {
-	return (
-		<LocationProvider>
-			<Header />
-			<main>
-				<Router>
-					<Route path="/" component={Home} />
-					<Route default component={NotFound} />
-				</Router>
-			</main>
-		</LocationProvider>
-	);
+    return (
+        <LocationProvider>
+            <Header />
+            <main>
+                <Router>
+                    <Route path="/" component={Home} />
+                    <Route path="/admin/devices" component={withAdmin(Devices)} />
+                    <Route path="/admin/users" component={withAdmin(Users)} />
+                    <Route default component={NotFound} />
+                </Router>
+            </main>
+        </LocationProvider>
+    );
 }
 
 render(<App />, document.getElementById('app')!);
