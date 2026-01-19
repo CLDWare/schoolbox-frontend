@@ -9,7 +9,7 @@ export function Header() {
                 <a href="/" class="btn btn-ghost text-xl">SchoolBox</a>
             </div>
 
-            <div class="flex-none pr-4">
+            <div class="flex-none pr-4 flex items-center">
                 {loading ? (
                     <div class="loading loading-spinner loading-sm"></div>
                 ) : user ? (
@@ -18,7 +18,11 @@ export function Header() {
                             <ProfilePicture displayName={user.display_name} />
                         </div>
                     ) : (
-                        <div>
+                        <div class="flex items-center gap-4">
+                            <ul class="menu menu-horizontal px-1">
+                                <li><a href="/admin/users">Users</a></li>
+                                <li><a href="/admin/devices">Devices</a></li>
+                            </ul>
                             <ProfilePicture displayName={user.display_name} />
                         </div>
                     )

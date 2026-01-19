@@ -1,12 +1,64 @@
-export function Devices() {
+export function AllDevices() {
     return (
-        <div class="hero bg-base-200 min-h-screen">
-            <div class="hero-content text-center">
-                <div class="max-w-md">
-                <h1 class="text-5xl font-bold">Devices</h1>
-                <p class="py-6">
-                    Deze page is alleen te bezoeken als admin, de role check is client side dus niet veilig, maar de backend checkt de role dus het hoeft hier ook niet veilig te zijn.
-                </p>
+        <div class="min-h-screen bg-base-200 p-4">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-5xl font-bold text-center mb-8">Devices</h1>
+                
+                <div class="card bg-base-100 shadow-xl mb-8">
+                    <div class="card-body items-center text-center">
+                        <h2 class="card-title">Link a new device</h2>
+                        <div class="join">
+                            <input class="input input-bordered join-item" placeholder="4 Digit pin" />
+                            <button type="submit" class="btn btn-primary join-item rounded-r-full">Link</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body p-0">
+                        <div class="overflow-x-auto">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Registration Date</th>
+                                        <th>Last Seen</th>
+                                        <th>Lastest Login</th>
+                                        <th>Room</th>
+                                        <th>Active Session</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>19/01/26</td>
+                                        <td>19/01/26</td>
+                                        <td>19/01/26</td>
+                                        <td>101</td>
+                                        <td>None</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>19/01/26</td>
+                                        <td>19/01/26</td>
+                                        <td>19/01/26</td>
+                                        <td>202</td>
+                                        <td>
+                                            <button type="button" className="btn btn-primary btn-s">View Session</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>19/01/26</td>
+                                        <td>19/01/26</td>
+                                        <td>19/01/26</td>
+                                        <td>303</td>
+                                        <td>None</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
