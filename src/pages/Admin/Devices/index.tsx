@@ -8,8 +8,8 @@ export function AllDevices() {
                     <div class="card-body items-center text-center">
                         <h2 class="card-title">Link a new device</h2>
                         <div class="join">
-                            <input class="input input-bordered join-item" placeholder="4 Digit pin" />
-                            <button type="submit" class="btn btn-primary join-item rounded-r-full">Link</button>
+                            <input class="input validator input-bordered join-item" placeholder="4 Digit pin" pattern="[0-9]{4}" inputMode="numeric" maxLength={4} required />
+                            <button type="submit" class="btn btn-primary join-item rounded-r-m">Link Device</button>
                         </div>
                     </div>
                 </div>
