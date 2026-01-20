@@ -15,7 +15,7 @@ export function Header() {
                 ) : user ? (
                     user.role === 0 ? (
                         <div class="flex items-center gap-2">
-                            <ProfilePicture displayName={user.display_name} />
+                            <ProfilePicture pictureUrl={user.picture_url} />
                         </div>
                     ) : (
                         <div class="flex items-center gap-4">
@@ -23,7 +23,7 @@ export function Header() {
                                 <li><a href="/admin/users">Users</a></li>
                                 <li><a href="/admin/devices">Devices</a></li>
                             </ul>
-                            <ProfilePicture displayName={user.display_name} />
+                            <ProfilePicture pictureUrl={user.picture_url} />
                         </div>
                     )
                 ) : (
@@ -37,11 +37,11 @@ export function Header() {
     );
 }
 
-export function ProfilePicture({ displayName }: { displayName: string }) {
+export function ProfilePicture({ pictureUrl }: { pictureUrl: string }) {
     return (
         <div class="avatar avatar-placeholder">
-            <div class="bg-primary text-neutral-content w-10 rounded-full">
-                <span>{displayName.charAt(0).toUpperCase()}</span>
+            <div class="bg-base text-neutral-content w-10 rounded-full">
+                <img src={pictureUrl} alt="Profile Picture" />
             </div>
         </div>
     );

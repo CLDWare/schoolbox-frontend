@@ -4,6 +4,7 @@ interface UserData {
   id: number;
   email: string;
   google_sub: string;
+  picture_url: string;
   role: number;
   joinedAt: string;
   name: string;
