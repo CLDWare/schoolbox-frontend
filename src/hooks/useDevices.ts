@@ -85,6 +85,23 @@ export function useDevices(initial?: { limit?: number; offset?: number; leased?:
     }
   }, [fetchDevices]);
 
+  const deleteDevice = useCallback(async (id: number): Promise<{ success: boolean; message: string }> => {
+    try {
+      const res = await fetch(`/api/device/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        await fetchDevices();
+        return { success: true, message: 'Device deleted successfully.' };
+      } else {
+        const body = await res.json();
+        return { success: false, message: body.message || 'Delete failed' };
+      }
+    } catch (e: unknown) {
+      return { success: false, message: e instanceof Error ? e.message : 'Network error' };
+    }
+  }, [fetchDevices]);
+
   return {
     devices,
     loading,
@@ -92,6 +109,7 @@ export function useDevices(initial?: { limit?: number; offset?: number; leased?:
     refetch: () => fetchDevices(),
     setParams,
     register,
+    deleteDevice,
     formatDate,
   };
 }

@@ -2,7 +2,7 @@ import { useState } from 'preact/hooks';
 import { useDevices } from '../../../hooks/useDevices.ts';
 
 export function AllDevices() {
-  const { devices, loading, error, register, formatDate } = useDevices();
+  const { devices, loading, error, register, deleteDevice, formatDate } = useDevices();
   const [pin, setPin] = useState('');
   const [msg, setMsg] = useState<string | null>(null);
 
@@ -13,6 +13,14 @@ export function AllDevices() {
     if (result.success) {
       setPin('');
     }
+  };
+
+  const handleDelete = async (id: number, room: string) => {
+    if (!confirm(`Are you sure you want to delete device ${id} (${room})?`)) {
+      return;
+    }
+    const result = await deleteDevice(id);
+    setMsg(result.message);
   };
 
   return (
@@ -55,15 +63,16 @@ export function AllDevices() {
                     <th>Lastest Login</th>
                     <th>Room</th>
                     <th>Active Session</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={6}>Loading...</td></tr>
+                    <tr><td colSpan={7}>Loading...</td></tr>
                   ) : error ? (
-                    <tr><td colSpan={6}>Error: {error}</td></tr>
+                    <tr><td colSpan={7}>Error: {error}</td></tr>
                   ) : devices.length === 0 ? (
-                    <tr><td colSpan={6}>No devices</td></tr>
+                    <tr><td colSpan={7}>No devices</td></tr>
                   ) : (
                     devices.map(d => (
                       <tr key={d.id}>
@@ -73,6 +82,15 @@ export function AllDevices() {
                         <td>{formatDate(d.latest_login)}</td>
                         <td>{d.room}</td>
                         <td>{d.active_session_id || 'None'}</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-error btn-sm"
+                            onClick={() => handleDelete(d.id, d.room)}
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     ))
                   )}
