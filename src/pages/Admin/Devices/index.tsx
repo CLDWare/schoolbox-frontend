@@ -27,7 +27,6 @@ export function AllDevices() {
     <div class="min-h-screen bg-base-200 p-4">
       <div class="max-w-7xl mx-auto">
         <h1 class="text-5xl font-bold text-center mb-8">Devices</h1>
-        
         <div class="card bg-base-100 shadow-xl mb-8">
           <div class="card-body items-center text-center">
             <h2 class="card-title">Link a new device</h2>
@@ -39,7 +38,7 @@ export function AllDevices() {
                   pattern="[0-9]{4}"
                   inputMode="numeric"
                   maxLength={4}
-                  required
+                  required                                                                          
                   value={pin}
                   onInput={(e: Event) => setPin((e.target as HTMLInputElement).value)}
                 />
