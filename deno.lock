@@ -3,6 +3,7 @@
   "specifiers": {
     "npm:@preact/preset-vite@^2.10.2": "2.10.2_@babel+core@7.28.6_vite@7.3.1__picomatch@4.0.3_preact@10.28.2",
     "npm:@tailwindcss/vite@^4.1.18": "4.1.18_vite@7.3.1__picomatch@4.0.3",
+    "npm:chart.js@^4.5.1": "4.5.1",
     "npm:daisyui@^5.5.14": "5.5.14",
     "npm:preact-iso@^2.11.1": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
     "npm:preact@^10.26.9": "10.28.2",
@@ -323,6 +324,9 @@
         "@jridgewell/sourcemap-codec"
       ]
     },
+    "@kurkle/color@0.3.4": {
+      "integrity": "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="
+    },
     "@preact/preset-vite@2.10.2_@babel+core@7.28.6_vite@7.3.1__picomatch@4.0.3_preact@10.28.2": {
       "integrity": "sha512-K9wHlJOtkE+cGqlyQ5v9kL3Ge0Ql4LlIZjkUTL+1zf3nNdF88F9UZN6VTV8jdzBX9Fl7WSzeNMSDG7qECPmSmg==",
       "dependencies": [
@@ -620,6 +624,12 @@
     },
     "caniuse-lite@1.0.30001764": {
       "integrity": "sha512-9JGuzl2M+vPL+pz70gtMF9sHdMFbY9FJaQBi186cHKH3pSzDvzoUJUPV6fqiKIMyXbud9ZLg4F3Yza1vJ1+93g=="
+    },
+    "chart.js@4.5.1": {
+      "integrity": "sha512-GIjfiT9dbmHRiYi6Nl2yFCq7kkwdkp1W/lp2J99rX0yo9tgJGn3lKQATztIjb5tVtevcBtIdICNWqlq5+E8/Pw==",
+      "dependencies": [
+        "@kurkle/color"
+      ]
     },
     "convert-source-map@2.0.0": {
       "integrity": "sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg=="
@@ -1025,6 +1035,7 @@
     "dependencies": [
       "npm:@preact/preset-vite@^2.10.2",
       "npm:@tailwindcss/vite@^4.1.18",
+      "npm:chart.js@^4.5.1",
       "npm:daisyui@^5.5.14",
       "npm:preact-iso@^2.11.1",
       "npm:preact@^10.26.9",
