@@ -7,6 +7,7 @@
   "imports": {
     "@preact/preset-vite": "npm:@preact/preset-vite@^2.10.2",
     "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.1.18",
+    "chart.js": "npm:chart.js@^4.5.1",
     "daisyui": "npm:daisyui@^5.5.14",
     "preact": "npm:preact@^10.26.9",
     "preact-iso": "npm:preact-iso@^2.11.1",

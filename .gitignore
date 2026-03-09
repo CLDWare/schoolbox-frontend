@@ -26,3 +26,4 @@ dist-ssr
 
 # Caddy (geen vragen stellen)
 caddy.exe
+.vite

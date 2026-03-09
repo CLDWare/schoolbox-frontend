@@ -57,6 +57,33 @@ export function useSession() {
     fetchCurrentSession();
   }, [fetchCurrentSession]);
 
+  // Auto-poll for vote updates every 2 seconds when a session is active
+  useEffect(() => {
+    if (!currentSession) {
+      return;
+    }
+
+    const pollInterval = setInterval(async () => {
+      try {
+        const response = await fetch('/api/session/current');
+        const data: ApiResponse<SessionData> = await response.json();
+        if (data.success && data.status === 200) {
+          // Only update state if votes have changed
+          const newVotes = data.data.votes;
+          setCurrentSession((prev) => {
+            if (!prev) return data.data;
+            const votesChanged = prev.votes.some((v, i) => v !== newVotes[i]) || prev.votes.length !== newVotes.length;
+            return votesChanged ? data.data : prev;
+          });
+        }
+      } catch (err) {
+        // Silently ignore polling errors
+      }
+    }, 2000);
+
+    return () => clearInterval(pollInterval);
+  }, [currentSession?.id]);
+
   const startSession = useCallback(async (deviceId: number, question: string): Promise<{ success: boolean; message: string }> => {
     setLoading(true);
     setError(null);

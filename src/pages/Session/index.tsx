@@ -3,6 +3,8 @@ import { useUser } from '../../hooks/useUser.ts';
 import { useDevices } from '../../hooks/useDevices.ts';
 import { useSession } from '../../hooks/useSession.ts';
 
+import { SessionChart } from '../../components/SessionChart.tsx';
+
 export function Session() {
     const { user, loading: userLoading } = useUser();
     const { devices, loading: devicesLoading, refetch: refetchDevices } = useDevices();
@@ -105,6 +107,7 @@ export function Session() {
                                 </button>
                             </div>
                         </div>
+                        <SessionChart currentSession={currentSession} />
                     </div>
                 ) : (
                     <div class="card bg-base-100 shadow-xl mb-8">
