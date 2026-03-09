@@ -66,7 +66,10 @@ export function Session() {
     return (
         <div class="min-h-screen bg-base-200 p-4">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-5xl font-bold text-center mb-8">Session Management</h1>
+                <div class="mb-8 flex flex-col items-center justify-between gap-4 md:flex-row">
+                    <h1 class="text-5xl font-bold text-center md:text-left">Session Management</h1>
+                    <a href="/session/history" class="btn btn-outline">My Session History</a>
+                </div>
 
                 {error && (
                     <div class="alert alert-error mb-4">

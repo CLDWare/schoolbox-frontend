@@ -25,6 +25,7 @@ export function Header() {
                         <div class="flex items-center gap-4">
                             <ul class="menu menu-horizontal px-1">
                                 <li><a class="btn" href="/session">Session</a></li>
+                                <li><a class="btn" href="/admin/sessions">All Sessions</a></li>
                                 <li><a class="btn" href="/admin/users">Users</a></li>
                                 <li><a class="btn" href="/admin/devices">Devices</a></li>
                                 <li><button type="button" onClick={() => globalThis.location.href = 'http://localhost:8000/api/logout'} class="btn">Logout</button></li>
