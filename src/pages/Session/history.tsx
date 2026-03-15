@@ -100,7 +100,10 @@ export function SessionHistory() {
     return (
         <div class="min-h-screen bg-base-200 p-4">
             <div class="max-w-5xl mx-auto">
-                <h1 class="text-4xl font-bold mb-6">Session History</h1>
+                <div class="mb-8 flex flex-col items-center justify-between gap-4 md:flex-row">
+                    <h1 class="text-5xl font-bold text-center md:text-left">Session History</h1>
+                    <a href="/session/" class="btn btn-outline">Back to Session Manager</a>
+                </div>
 
                 {error && (
                     <div class="alert alert-error mb-4">

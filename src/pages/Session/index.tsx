@@ -1,13 +1,13 @@
 import { useState } from 'preact/hooks';
 import { useUser } from '../../hooks/useUser.ts';
-import { useDevices } from '../../hooks/useDevices.ts';
+import { useDeviceNames } from '../../hooks/useDeviceNames.ts';
 import { useSession } from '../../hooks/useSession.ts';
 
 import { SessionChart } from '../../components/SessionChart.tsx';
 
 export function Session() {
     const { user, loading: userLoading } = useUser();
-    const { devices, loading: devicesLoading, refetch: refetchDevices } = useDevices();
+    const { devices, loading: devicesLoading, refetch: refetchDevices } = useDeviceNames();
     const { currentSession, loading: sessionLoading, error, startSession, stopSession, refetchSession: _refetchSession } = useSession();
     const [selectedDeviceId, setSelectedDeviceId] = useState<number | ''>('');
     const [question, setQuestion] = useState('');
@@ -61,7 +61,7 @@ export function Session() {
         }
     };
 
-    const availableDevices = devices.filter(d => !d.active_session_id); // Only devices without active sessions
+    const availableDevices = devices.filter(d => d.available); // Only available devices
 
     return (
         <div class="min-h-screen bg-base-200 p-4">
@@ -130,7 +130,7 @@ export function Session() {
                                         <option value="" disabled>Select a device</option>
                                         {availableDevices.map(device => (
                                             <option key={device.id} value={device.id}>
-                                                Device {device.id} - Room: {device.room}
+                                                Device {device.id}{device.room ? ` - Room: ${device.room}` : ''}
                                             </option>
                                         ))}
                                     </select>
