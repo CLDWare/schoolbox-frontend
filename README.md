@@ -1,3 +1,5 @@
+![Time Badge](https://hackatime.hackclub.com/api/v1/badge/U080TNHKK32/CLDWare/schoolbox-frontend)
+
 # 🎒SchoolBox Frontend
 (geen vragen stellen over de rugzak emoij, ik kon niks anders bedenken)
 
