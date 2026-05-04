@@ -27,6 +27,13 @@ interface DevicesApiResponse {
   timestamp: string;
 }
 
+interface ApiResponse {
+  status: number;
+  success: boolean;
+  message: string;
+  timestamp: string;
+}
+
 export function useDevices(initial?: { limit?: number; offset?: number; leased?: boolean | null }) {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
@@ -85,6 +92,35 @@ export function useDevices(initial?: { limit?: number; offset?: number; leased?:
     }
   }, [fetchDevices]);
 
+  const relink = useCallback(async (deviceId: string, pin: string): Promise<{ success: boolean; message: string }> => {
+    if (!/^[0-9]+$/.test(deviceId) || Number(deviceId) <= 0) {
+      return { success: false, message: 'Device ID must be a positive number.' };
+    }
+
+    if (!/^[0-9]{4}$/.test(pin)) {
+      return { success: false, message: 'Pin must be exactly 4 digits.' };
+    }
+
+    try {
+      const res = await fetch('/api/device/relink', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          device_id: Number(deviceId),
+          pin: Number(pin),
+        }),
+      });
+      const body: ApiResponse = await res.json();
+      if (res.ok && body.success) {
+        await fetchDevices();
+        return { success: true, message: body.message || 'Device relinked.' };
+      }
+      return { success: false, message: body.message || 'Relink failed' };
+    } catch (e: unknown) {
+      return { success: false, message: e instanceof Error ? e.message : 'Network error' };
+    }
+  }, [fetchDevices]);
+
   const deleteDevice = useCallback(async (id: number): Promise<{ success: boolean; message: string }> => {
     try {
       const res = await fetch(`/api/device/${id}`, {
@@ -109,6 +145,7 @@ export function useDevices(initial?: { limit?: number; offset?: number; leased?:
     refetch: () => fetchDevices(),
     setParams,
     register,
+    relink,
     deleteDevice,
     formatDate,
   };

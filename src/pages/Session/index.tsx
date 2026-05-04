@@ -1,13 +1,13 @@
 import { useState } from 'preact/hooks';
 import { useUser } from '../../hooks/useUser.ts';
-import { useDevices } from '../../hooks/useDevices.ts';
+import { useDeviceNames } from '../../hooks/useDeviceNames.ts';
 import { useSession } from '../../hooks/useSession.ts';
 
 import { SessionChart } from '../../components/SessionChart.tsx';
 
 export function Session() {
     const { user, loading: userLoading } = useUser();
-    const { devices, loading: devicesLoading, refetch: refetchDevices } = useDevices();
+    const { devices, loading: devicesLoading, refetch: refetchDevices } = useDeviceNames();
     const { currentSession, loading: sessionLoading, error, startSession, stopSession, refetchSession: _refetchSession } = useSession();
     const [selectedDeviceId, setSelectedDeviceId] = useState<number | ''>('');
     const [question, setQuestion] = useState('');
@@ -61,12 +61,15 @@ export function Session() {
         }
     };
 
-    const availableDevices = devices.filter(d => !d.active_session_id); // Only devices without active sessions
+    const availableDevices = devices.filter(d => d.available); // Only available devices
 
     return (
         <div class="min-h-screen bg-base-200 p-4">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-5xl font-bold text-center mb-8">Session Management</h1>
+                <div class="mb-8 flex flex-col items-center justify-between gap-4 md:flex-row">
+                    <h1 class="text-5xl font-bold text-center md:text-left">Session Management</h1>
+                    <a href="/session/history" class="btn btn-outline">My Session History</a>
+                </div>
 
                 {error && (
                     <div class="alert alert-error mb-4">
@@ -127,7 +130,7 @@ export function Session() {
                                         <option value="" disabled>Select a device</option>
                                         {availableDevices.map(device => (
                                             <option key={device.id} value={device.id}>
-                                                Device {device.id} - Room: {device.room}
+                                                Device {device.id}{device.room ? ` - Room: ${device.room}` : ''}
                                             </option>
                                         ))}
                                     </select>
