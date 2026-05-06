@@ -21,5 +21,15 @@ export const actions = {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ pin })
 		});
+	},
+	relink: async ({ fetch, request }) => {
+		const data = await request.formData();
+		const pin = Number(data.get('pin'));
+		const device_id = Number(data.get('id'));
+		await fetch(`/api/device/relink`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ pin, device_id })
+		});
 	}
 };

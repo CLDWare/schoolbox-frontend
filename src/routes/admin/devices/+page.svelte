@@ -3,6 +3,8 @@
 	let { data }: { data: PageData } = $props();
 
 	let link_device: HTMLDialogElement = $state();
+	let relink_device: HTMLDialogElement = $state();
+
 	// icons
 	import PencilIcon from 'phosphor-svelte/lib/PencilIcon';
 	import LinkIcon from 'phosphor-svelte/lib/LinkIcon';
@@ -14,7 +16,9 @@
 		<div class="flex items-center">
 			<div class="flex-1"></div>
 			<div>
-				<button class="btn btn-ghost btn-primary">Relink A Device</button>
+				<button onclick={() => relink_device.showModal()} class="btn btn-ghost btn-primary">
+					Relink A Device
+				</button>
 				<button onclick={() => link_device.showModal()} class="btn btn-soft btn-primary">
 					<LinkIcon weight="bold" />
 					Link New Device
@@ -85,6 +89,50 @@
 					<button type="submit" class="btn btn-soft btn-primary">
 						<LinkIcon weight="bold" />
 						Link
+					</button>
+				</div>
+			</form>
+		</div>
+		<form method="dialog" class="modal-backdrop">
+			<button>close</button>
+		</form>
+	</dialog>
+
+	<dialog bind:this={relink_device} class="modal modal-bottom sm:modal-middle">
+		<div class="modal-box">
+			<h3 class="text-lg font-bold">Relink a new device</h3>
+			<p class="py-4">
+				This will relink a device to an old database entry. Please input the pin shown on your
+				device below.
+			</p>
+			<form method="POST" action="?/relink">
+				<div class="flex flex-col">
+					<label for="pin" class="font-bold">Pin</label>
+					<input
+						name="pin"
+						class="validator input"
+						type="text"
+						pattern="[0-9][0-9][0-9][0-9]"
+						inputMode="numeric"
+						placeholder="1234"
+						required
+					/>
+					<label for="id" class="mt-2 font-bold">Device ID</label>
+					<input
+						name="id"
+						class="validator input"
+						type="text"
+						pattern="[0-9]+"
+						inputMode="numeric"
+						placeholder="Eg. 1"
+						required
+					/>
+				</div>
+				<div class="validator-hint hidden">Please enter a 4 digit pin</div>
+				<div class="modal-action">
+					<button type="submit" class="btn btn-soft btn-primary">
+						<LinkIcon weight="bold" />
+						Relink
 					</button>
 				</div>
 			</form>
