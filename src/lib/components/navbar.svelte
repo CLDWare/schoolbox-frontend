@@ -71,7 +71,7 @@
 				</div>
 			</ul>
 		{:else}
-			<a class="btn border-[#e5e5e5] bg-white text-black" href={PUBLIC_URL + '/api/login'}>
+			<a class="btn border-[#e5e5e5] bg-white text-black" href={PUBLIC_URL + '/api/login'} data-sveltekit-reload rel="external"> 
 				<svg
 					aria-label="Google logo"
 					width="16"
