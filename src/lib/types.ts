@@ -23,6 +23,16 @@ export type Session = {
 	votes: number[];
 };
 
+export type Device = {
+	active_session_id: number;
+	id: number;
+	last_seen: string;
+	latest_login: string;
+	lease_start: string;
+	registration_date: string;
+	room: string;
+};
+
 export type ApiSuccess<T> = {
 	data: T;
 	message: string;
