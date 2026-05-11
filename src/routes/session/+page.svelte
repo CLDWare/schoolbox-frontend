@@ -3,4 +3,8 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-{data.session.message}
+{#if data.session.success}
+	{data.session.data.question}
+{:else}
+	{data.session.message}
+{/if}
