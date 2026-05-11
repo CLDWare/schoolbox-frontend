@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import { Bar } from 'svelte-chartjs';
 	import { Chart, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
@@ -7,17 +7,18 @@
 	Chart.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 	let data = $state();
+	let { votes = [] }: { votes: number[] } = $props();
 
 	onMount(() => {
 		const bg = daisyChartColors(0.4);
 		const border = daisyChartColors(1.0);
 
 		data = {
-			labels: ['1', '2', '3', '4', '5'],
+			labels: ['Awnser 1', 'Awnser 2', 'Awnser 3', 'Awnser 4', '5'],
 			datasets: [
 				{
 					label: 'amount of votes',
-					data: [12, 19, 3, 5, 2],
+					data: votes,
 					backgroundColor: bg,
 					borderColor: border,
 					borderWidth: 2

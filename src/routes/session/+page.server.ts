@@ -6,3 +6,9 @@ export const load: PageServerLoad = async ({ fetch }) => {
 	const session: ApiResponse<Session> = await res.json();
 	return { session };
 };
+
+export const actions = {
+	sessionstop: async ({ fetch }) => {
+		await fetch(`/api/session/stop`, { method: 'POST' });
+	}
+};
