@@ -33,6 +33,12 @@ export type Device = {
 	room: string;
 };
 
+export type DeviceNames = {
+	available: boolean;
+	id: number;
+	room: string;
+};
+
 export type ApiSuccess<T> = {
 	data: T;
 	message: string;

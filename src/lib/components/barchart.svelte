@@ -14,14 +14,15 @@
 		const border = daisyChartColors(1.0);
 
 		data = {
-			labels: ['Awnser 1', 'Awnser 2', 'Awnser 3', 'Awnser 4', '5'],
+			labels: ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'],
 			datasets: [
 				{
 					label: 'amount of votes',
 					data: votes,
 					backgroundColor: bg,
 					borderColor: border,
-					borderWidth: 2
+					borderWidth: 2,
+					borderRadius: 15
 				}
 			]
 		};
