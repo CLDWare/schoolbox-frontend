@@ -9,6 +9,9 @@
 	import ChatIcon from 'phosphor-svelte/lib/ChatIcon';
 	import QuestionIcon from 'phosphor-svelte/lib/QuestionIcon';
 	import ScreencastIcon from 'phosphor-svelte/lib/ScreencastIcon';
+	import MapPinIcon from 'phosphor-svelte/lib/MapPinIcon';
+
+	let selectedId: number = $state(0);
 </script>
 
 <div class="mx-auto mt-5 max-w-7xl">
@@ -40,14 +43,34 @@
 
 		{#if data.devices.success}
 			<form method="POST" action="?/sessionstart">
-				<select class="select" name="device_id" required>
-					<option disabled selected>Select a device</option>
+				<h2 class="text-2xl">Select a Device</h2>
+				<div class="grid grid-cols-2 gap-2 lg:grid-cols-4">
 					{#each data.devices.data as device (device.id)}
 						{#if device.available}
-							<option value={device.id}>{device.id} - {device.room}</option>
+							<div
+								role="button"
+								tabindex="0"
+								class="col-span-1 flex cursor-pointer flex-col items-center rounded-box bg-base-300 py-10 transition
+									{selectedId === device.id ? 'ring-2 ring-primary' : ''}"
+								onclick={() => (selectedId = device.id)}
+								onkeydown={(e) => {
+									if (e.key === ' ' || e.key === 'Enter') selectedId = device.id;
+								}}
+								aria-pressed={selectedId === device.id}
+							>
+								<h3 class="text-xl font-medium">Device {device.id}</h3>
+								<div class="flex items-center">
+									<MapPinIcon weight="bold" class="mr-1" />
+									{device.room}
+								</div>
+							</div>
 						{/if}
 					{/each}
-				</select>
+				</div>
+				<h2 class="text-2xl">Ask a Question</h2>
+
+				<input type="hidden" name="id" value={selectedId} />
+
 				<input type="text" name="question" class="input" required />
 
 				<button class="btn btn-soft btn-primary"> Start Session </button>
