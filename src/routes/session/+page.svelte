@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	import Barchart from '$lib/components/barchart.svelte';
@@ -10,8 +11,11 @@
 	import QuestionIcon from 'phosphor-svelte/lib/QuestionIcon';
 	import ScreencastIcon from 'phosphor-svelte/lib/ScreencastIcon';
 	import MapPinIcon from 'phosphor-svelte/lib/MapPinIcon';
+	import UsbIcon from 'phosphor-svelte/lib/UsbIcon';
 
 	let selectedId: number = $state(0);
+	let question: string = $state('');
+	let wizardStep: number = $state(1);
 </script>
 
 <div class="mx-auto mt-5 max-w-7xl">
@@ -38,44 +42,99 @@
 			</form>
 		</div>
 		<Barchart votes={data.session.data.votes} />
-	{:else}
-		{data.session.message}
+	{:else if data.devices.success}
+		<div class="flex flex-col items-center">
+			<ul class="steps mb-6">
+				<li class="step" class:step-primary={wizardStep >= 1}>Choose Device</li>
+				<li class="step" class:step-primary={wizardStep >= 2}>Ask Question</li>
+				<li class="step" class:step-primary={wizardStep >= 3}>Start Session</li>
+			</ul>
 
-		{#if data.devices.success}
-			<form method="POST" action="?/sessionstart">
-				<h2 class="text-2xl">Select a Device</h2>
-				<div class="grid grid-cols-2 gap-2 lg:grid-cols-4">
-					{#each data.devices.data as device (device.id)}
-						{#if device.available}
-							<div
-								role="button"
-								tabindex="0"
-								class="col-span-1 flex cursor-pointer flex-col items-center rounded-box bg-base-300 py-10 transition
-									{selectedId === device.id ? 'ring-2 ring-primary' : ''}"
-								onclick={() => (selectedId = device.id)}
-								onkeydown={(e) => {
-									if (e.key === ' ' || e.key === 'Enter') selectedId = device.id;
-								}}
-								aria-pressed={selectedId === device.id}
+			<form method="POST" action="?/sessionstart" use:enhance class="w-full max-w-4xl">
+				{#if wizardStep == 1}
+					<div class="flex flex-col">
+						<h2 class="text-2xl font-medium">Select a Device</h2>
+						<p class="text-lg">Select one device to continue</p>
+						<div class="grid grid-cols-2 gap-2 lg:grid-cols-4">
+							{#each data.devices.data as device (device.id)}
+								{#if device.available}
+									<div
+										role="button"
+										tabindex="0"
+										class="col-span-1 flex cursor-pointer flex-col items-center rounded-box bg-base-300 py-10 transition
+                                    {selectedId === device.id ? 'ring-2 ring-primary' : ''}"
+										onclick={() => (selectedId = device.id)}
+										onkeydown={(e) => {
+											if (e.key === ' ' || e.key === 'Enter') selectedId = device.id;
+										}}
+										aria-pressed={selectedId === device.id}
+									>
+										<h3 class="text-xl font-medium">Device {device.id}</h3>
+										<div class="flex items-center">
+											<MapPinIcon weight="bold" class="mr-1" />
+											{device.room}
+										</div>
+									</div>
+								{/if}
+							{/each}
+						</div>
+						<div class="flex justify-end">
+							<button
+								type="button"
+								class="btn btn-soft btn-primary"
+								disabled={selectedId === 0}
+								onclick={() => wizardStep++}
 							>
-								<h3 class="text-xl font-medium">Device {device.id}</h3>
-								<div class="flex items-center">
-									<MapPinIcon weight="bold" class="mr-1" />
-									{device.room}
-								</div>
-							</div>
-						{/if}
-					{/each}
-				</div>
-				<h2 class="text-2xl">Ask a Question</h2>
+								Next
+							</button>
+						</div>
+					</div>
+				{:else if wizardStep == 2}
+					<div class="flex flex-col">
+						<h2 class="text-2xl font-medium">Ask a Question</h2>
+						<p class="text-lg">Your question will be sent to device {selectedId}.</p>
+						<input
+							type="text"
+							name="question"
+							class="input input-lg my-4 w-full"
+							placeholder="How would you rate today's class?"
+							bind:value={question}
+							required
+						/>
+						<div class="flex justify-between">
+							<button type="button" class="btn btn-soft" onclick={() => wizardStep--}>
+								Previous
+							</button>
+							<button type="button" class="btn btn-soft btn-primary" onclick={() => wizardStep++}>
+								Next
+							</button>
+						</div>
+					</div>
+				{:else}
+					<div class="flex flex-col gap-4">
+						<h2 class="text-2xl font-medium">Start Session</h2>
+						<div class="flex items-center gap-1 rounded-box bg-base-300 p-4">
+							<UsbIcon weight="bold" />
+							You selected device {selectedId}
+						</div>
+						<div class="flex items-center gap-1 rounded-box bg-base-300 p-4">
+							<QuestionIcon weight="bold" />
+							Your question is {question}
+						</div>
 
-				<input type="hidden" name="id" value={selectedId} />
+						<input type="hidden" name="device_id" value={selectedId} />
+						<input type="hidden" name="question" value={question} />
 
-				<input type="text" name="question" class="input" required />
-
-				<button class="btn btn-soft btn-primary"> Start Session </button>
+						<div class="flex justify-between">
+							<button type="button" class="btn btn-soft" onclick={() => wizardStep--}>
+								Previous
+							</button>
+							<button class="btn btn-soft btn-lg btn-primary">Start Session</button>
+						</div>
+					</div>
+				{/if}
 			</form>
-		{/if}
+		</div>
 	{/if}
 </div>
 

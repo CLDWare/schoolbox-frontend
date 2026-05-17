@@ -25,10 +25,15 @@ export const actions = {
 		const data = await request.formData();
 		const device_id = Number(data.get('device_id'));
 		const question = String(data.get('question'));
+
 		await fetch(`/api/session`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ device_id, question })
 		});
+
+		console.log(device_id, question);
+
+		return { success: true };
 	}
 };
