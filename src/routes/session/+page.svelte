@@ -56,27 +56,36 @@
 						<h2 class="text-2xl font-medium">Select a Device</h2>
 						<p class="text-lg">Select one device to continue</p>
 						<div class="grid grid-cols-2 gap-2 lg:grid-cols-4">
-							{#each data.devices.data as device (device.id)}
-								{#if device.available}
-									<div
-										role="button"
-										tabindex="0"
-										class="col-span-1 flex cursor-pointer flex-col items-center rounded-box bg-base-300 py-10 transition
-                                    {selectedId === device.id ? 'ring-2 ring-primary' : ''}"
-										onclick={() => (selectedId = device.id)}
-										onkeydown={(e) => {
-											if (e.key === ' ' || e.key === 'Enter') selectedId = device.id;
-										}}
-										aria-pressed={selectedId === device.id}
-									>
-										<h3 class="text-xl font-medium">Device {device.id}</h3>
-										<div class="flex items-center">
-											<MapPinIcon weight="bold" class="mr-1" />
-											{device.room}
+							{#if data.devices.data.some((d) => d.available)}
+								{#each data.devices.data as device (device.id)}
+									{#if device.available}
+										<div
+											role="button"
+											tabindex="0"
+											class="col-span-1 flex cursor-pointer flex-col items-center rounded-box bg-base-300 py-10 transition
+                    {selectedId === device.id ? 'ring-2 ring-primary' : ''}"
+											onclick={() => (selectedId = device.id)}
+											onkeydown={(e) => {
+												if (e.key === ' ' || e.key === 'Enter') selectedId = device.id;
+											}}
+											aria-pressed={selectedId === device.id}
+										>
+											<h3 class="text-xl font-medium">Device {device.id}</h3>
+											<div class="flex items-center">
+												<MapPinIcon weight="bold" class="mr-1" />
+												{device.room}
+											</div>
 										</div>
-									</div>
-								{/if}
-							{/each}
+									{/if}
+								{/each}
+							{:else}
+								<div
+									class="col-span-1 flex items-center justify-center gap-1 rounded-box bg-base-300 py-10 text-warning"
+								>
+									<XIcon weight="bold" />
+									No available devices found
+								</div>
+							{/if}
 						</div>
 						<div class="flex justify-end">
 							<button
