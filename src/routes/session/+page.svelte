@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidate } from '$app/navigation';
+	import { onDestroy } from 'svelte';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	import Barchart from '$lib/components/barchart.svelte';
+	import { resolve } from '$app/paths';
 
 	import XIcon from 'phosphor-svelte/lib/XIcon';
 	import CalendarIcon from 'phosphor-svelte/lib/CalendarIcon';
@@ -16,6 +19,20 @@
 	let selectedId: number = $state(0);
 	let question: string = $state('');
 	let wizardStep: number = $state(1);
+
+	let interval: ReturnType<typeof setInterval> | undefined;
+
+	$effect(() => {
+		if (data.session.success) {
+			interval = setInterval(() => {
+				invalidate('app:session');
+			}, 5000);
+		} else {
+			clearInterval(interval);
+		}
+	});
+
+	onDestroy(() => clearInterval(interval));
 </script>
 
 <div class="mx-auto mt-5 max-w-7xl">
@@ -151,7 +168,7 @@
 	<div class="mx-auto flex max-w-7xl flex-col">
 		<h2 class="text-2xl font-medium">Session History</h2>
 		{#each data.history.data as history (history.id)}
-			<div class="my-1 rounded-box bg-base-300 p-4">
+			<a class="my-1 rounded-box bg-base-300 p-4" href={resolve(`/session/${history.id}`)}>
 				<div class="flex flex-col">
 					<p>{history.question}</p>
 					<p class="flex items-center text-base-content/50">
@@ -161,7 +178,7 @@
 						{new Date(history.date).getHours() + ':' + new Date(history.date).getMinutes()}
 					</p>
 				</div>
-			</div>
+			</a>
 		{/each}
 	</div>
 {:else}

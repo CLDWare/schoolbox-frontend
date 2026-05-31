@@ -1,7 +1,9 @@
 import type { PageServerLoad } from './$types';
 import type { ApiResponse, Session, DeviceNames } from '$lib/types';
 
-export const load: PageServerLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async ({ fetch, depends }) => {
+	depends('app:session');
+
 	const [sessionRes, historyRes, devicesRes] = await Promise.all([
 		fetch('/api/session/current'),
 		fetch('/api/session'),
