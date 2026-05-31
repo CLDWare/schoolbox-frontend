@@ -13,6 +13,17 @@ export const actions = {
 		const id = data.get('device_id');
 		await fetch(`/api/device/${id}`, { method: 'DELETE' });
 	},
+	changeroom: async ({ fetch, request }) => {
+		const data = await request.formData();
+		const room = data.get('room');
+		const id = data.get('device_id');
+		console.log(room);
+		await fetch(`/api/device/${id}`, {
+			method: 'PATCH',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ room })
+		});
+	},
 	link: async ({ fetch, request }) => {
 		const data = await request.formData();
 		const pin = Number(data.get('pin'));

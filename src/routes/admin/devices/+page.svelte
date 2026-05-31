@@ -4,11 +4,14 @@
 
 	let link_device: HTMLDialogElement = $state();
 	let relink_device: HTMLDialogElement = $state();
+	let editing = $state<number | null>(null);
 
 	// icons
 	import PencilIcon from 'phosphor-svelte/lib/PencilIcon';
 	import LinkIcon from 'phosphor-svelte/lib/LinkIcon';
 	import LinkBreakIcon from 'phosphor-svelte/lib/LinkBreakIcon';
+
+	import { timeAgo } from '$lib/time';
 </script>
 
 {#if data.devices.success}
@@ -42,13 +45,36 @@
 						<th>{device.id}</th>
 						<td>{device.active_session_id ?? 'None'}</td>
 						<td>
-							<!-- TODO hook up device room edit here -->
-							<div class="flex items-center rounded-box bg-base-100 p-2 hover:cursor-pointer">
-								<PencilIcon weight="bold" class="mr-2" />
-								{device.room ?? 'None'}
-							</div>
+							{#if editing === device.id}
+								<form
+									method="POST"
+									action="?/changeroom"
+									use:enhance={() => {
+										return () => {
+											editing = null;
+										};
+									}}
+								>
+									<input type="hidden" name="device_id" value={device.id} />
+									<input
+										name="room"
+										class="input w-24"
+										autofocus
+										value={device.room ?? ''}
+										onblur={(e) => e.currentTarget.form?.requestSubmit()}
+									/>
+								</form>
+							{:else}
+								<button
+									class="flex w-24 items-center rounded-box bg-base-100 p-2 hover:cursor-pointer"
+									onclick={() => (editing = device.id)}
+								>
+									<PencilIcon weight="bold" class="mr-2" />
+									{device.room ?? 'None'}
+								</button>
+							{/if}
 						</td>
-						<td>{device.last_seen}</td>
+						<td>{timeAgo(device.last_seen) ?? 'Never'}</td>
 						<td>
 							<form method="POST" action="?/unlink">
 								<input type="hidden" name="device_id" value={device.id} />
