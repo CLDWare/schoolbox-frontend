@@ -21,3 +21,20 @@ export function timeAgo(dateInput: string | number | Date) {
 	const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 	return rtf.format(Math.floor(deltaSeconds / divider), units[unitIndex]);
 }
+
+export function formatShort(dateInput: string | number | Date): string {
+	const options: Intl.DateTimeFormatOptions = {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	};
+	return new Date(dateInput).toLocaleDateString('nl-NL', options);
+}
+
+export function getTime(dateInput: string | number | Date): string {
+	return new Date(dateInput).toLocaleTimeString('nl-NL', {
+		hour: '2-digit',
+		minute: '2-digit'
+	});
+}
