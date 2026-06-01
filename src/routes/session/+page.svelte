@@ -1,25 +1,27 @@
 <script lang="ts">
+	//imports
 	import { enhance } from '$app/forms';
 	import { invalidate } from '$app/navigation';
 	import { onDestroy } from 'svelte';
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 	import Barchart from '$lib/components/barchart.svelte';
-	import { resolve } from '$app/paths';
+	import Sessioncard from '$lib/components/sessioncard.svelte';
 
+	// icons
 	import XIcon from 'phosphor-svelte/lib/XIcon';
-	import CalendarIcon from 'phosphor-svelte/lib/CalendarIcon';
-	import ClockIcon from 'phosphor-svelte/lib/ClockIcon';
 	import ChatIcon from 'phosphor-svelte/lib/ChatIcon';
 	import QuestionIcon from 'phosphor-svelte/lib/QuestionIcon';
 	import ScreencastIcon from 'phosphor-svelte/lib/ScreencastIcon';
 	import MapPinIcon from 'phosphor-svelte/lib/MapPinIcon';
 	import UsbIcon from 'phosphor-svelte/lib/UsbIcon';
 
+	// vars
 	let selectedId: number = $state(0);
 	let question: string = $state('');
 	let wizardStep: number = $state(1);
 
+	// refrsh
 	let interval: ReturnType<typeof setInterval> | undefined;
 
 	$effect(() => {
@@ -168,17 +170,7 @@
 	<div class="mx-auto flex max-w-7xl flex-col">
 		<h2 class="text-2xl font-medium">Session History</h2>
 		{#each data.history.data as history (history.id)}
-			<a class="my-1 rounded-box bg-base-300 p-4" href={resolve(`/session/${history.id}`)}>
-				<div class="flex flex-col">
-					<p>{history.question}</p>
-					<p class="flex items-center text-base-content/50">
-						<CalendarIcon weight="bold" class="mr-1" />
-						{new Date(history.date).toLocaleDateString('nl-NL')}
-						<ClockIcon weight="bold" class="ml-1" />
-						{new Date(history.date).getHours() + ':' + new Date(history.date).getMinutes()}
-					</p>
-				</div>
-			</a>
+			<Sessioncard data={history} />
 		{/each}
 	</div>
 {:else}

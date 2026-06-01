@@ -2,10 +2,10 @@
 	import type { PageData } from './$types';
 	let { data }: { data: PageData } = $props();
 
-	import Sessioncard from '$lib/components/sessioncard.svelte';
+	import Sessioncard from '$lib/components/adminsessioncard.svelte';
 </script>
 
-<div class="mx-auto grid max-w-7xl grid-cols-3 gap-4">
+<div class="mx-auto max-w-7xl">
 	{#if data.sessions.success}
 		{#each data.sessions.data as session (session.id)}
 			<Sessioncard data={session} />

@@ -1,21 +1,21 @@
 <script lang="ts">
 	let { data } = $props();
-
-	import Barchart from '$lib/components/barchart.svelte';
+	import { resolve } from '$app/paths';
 
 	import CalendarIcon from 'phosphor-svelte/lib/CalendarIcon';
 	import ClockIcon from 'phosphor-svelte/lib/ClockIcon';
+
+	import { formatShort, getTime } from '$lib/time';
 </script>
 
-<div class="rounded-box bg-base-100 px-4">
-	<div class="mt-2 flex">
-		<h2 class="flex-1">{data.question}</h2>
+<a class="my-1 rounded-box bg-base-300 p-4" href={resolve(`/session/${data.id}`)}>
+	<div class="flex flex-col">
+		<p>{data.question}</p>
 		<p class="flex items-center text-base-content/50">
 			<CalendarIcon weight="bold" class="mr-1" />
-			{new Date(data.date).toLocaleDateString('nl-NL')}
+			{formatShort(data.date)}
 			<ClockIcon weight="bold" class="ml-1" />
-			{new Date(data.date).getHours() + ':' + new Date(data.date).getMinutes()}
+			{getTime(data.date)}
 		</p>
 	</div>
-	<Barchart votes={data.votes} />
-</div>
+</a>
